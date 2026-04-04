@@ -1,0 +1,6 @@
+{
+  "screen.playerdeathanimation.title": "玩家死亡动画",
+  "screen.playerdeathanimation.self_effect": "死亡界面效果：%s",
+  "screen.playerdeathanimation.observer_effect": "死亡动画：%s",
+  "screen.playerdeathanimation.animation": "动画预设：%s"
+}
