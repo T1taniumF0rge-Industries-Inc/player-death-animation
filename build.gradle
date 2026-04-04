@@ -16,6 +16,18 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ['common/src/main/java', 'fabric/src/main/java']
+        }
+        resources {
+            srcDirs = ['common/src/main/resources', 'fabric/src/main/resources']
+        }
+    }
+}
+
+
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
