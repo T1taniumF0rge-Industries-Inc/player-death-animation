@@ -1,0 +1,75 @@
+# Copyright (c) 2026 The T1taniumF0rge Industries® (Inc.)
+name: Build
+permissions:
+  contents: read
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Quality scan
+        run: ./scripts/quality-scan.sh
+
+  build-loader:
+    runs-on: ubuntu-latest
+    needs: quality
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - loader: fabric
+            enabled: true
+          - loader: forge
+            enabled: false
+          - loader: neoforge
+            enabled: false
+          - loader: quilt
+            enabled: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build ${{ matrix.loader }}
+        if: ${{ matrix.enabled }}
+        run: ./scripts/build-artifacts.sh ${{ matrix.loader }}
+      - name: Skip disabled loader
+        if: ${{ !matrix.enabled }}
+        run: echo "${{ matrix.loader }} build is intentionally disabled for now"
+      - name: Upload artifact
+        if: ${{ matrix.enabled }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.loader }}-artifact
+          path: ${{ matrix.loader }}/build/libs/*.jar
+
+  attest-build-provenance:
+    runs-on: ubuntu-latest
+    needs: build-loader
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v4.1.0
+        with:
+          subject-path: 'artifacts/**/*.jar'

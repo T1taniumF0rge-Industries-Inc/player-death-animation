@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "playerdeathanimation",
+  "version": "${version}",
+  "name": "Player Death Animation",
+  "description": "Die with style!",
+  "authors": [
+    "playerdeathanimation"
+  ],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "com.titan1um.playerdeathanimation.PlayerDeathAnimationMod"
+    ],
+    "client": [
+      "com.titan1um.playerdeathanimation.client.PlayerDeathAnimationClient"
+    ],
+    "modmenu": [
+      "com.titan1um.playerdeathanimation.config.PDAModMenu"
+    ]
+  },
+  "mixins": [
+    "playerdeathanimation.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-api": "*",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "modmenu": ">=7.0.0"
+  }
+}
