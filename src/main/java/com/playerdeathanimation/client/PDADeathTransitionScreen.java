@@ -13,7 +13,9 @@ public class PDADeathTransitionScreen extends Screen {
 
     private final Text deathMessage;
     private final boolean hardcore;
+    private DeathScreen deathScreen;
     private long startedAt;
+    private boolean switchedToDeathScreen;
 
     protected PDADeathTransitionScreen(Text deathMessage, boolean hardcore) {
         super(Text.empty());
@@ -25,11 +27,19 @@ public class PDADeathTransitionScreen extends Screen {
     protected void init() {
         super.init();
         this.startedAt = System.currentTimeMillis();
+        this.switchedToDeathScreen = false;
+        this.deathScreen = new DeathScreen(this.deathMessage, this.hardcore);
+        if (this.client != null) {
+            this.deathScreen.init(this.client, this.width, this.height);
+        }
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         long elapsed = System.currentTimeMillis() - startedAt;
+        if (this.deathScreen != null) {
+            this.deathScreen.render(context, mouseX, mouseY, delta);
+        }
 
         float alpha;
         if (elapsed <= FLASH_MS) {
@@ -43,8 +53,9 @@ public class PDADeathTransitionScreen extends Screen {
         int color = (alphaByte << 24);
         context.fill(0, 0, this.width, this.height, color);
 
-        if (elapsed >= FLASH_MS + FADE_MS && client != null) {
-            client.setScreen(new DeathScreen(this.deathMessage, this.hardcore));
+        if (!this.switchedToDeathScreen && elapsed >= FLASH_MS + FADE_MS && client != null && this.deathScreen != null) {
+            this.switchedToDeathScreen = true;
+            client.setScreen(this.deathScreen);
         }
     }
 
