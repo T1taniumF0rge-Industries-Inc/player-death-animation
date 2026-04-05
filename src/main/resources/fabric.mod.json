@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
-  "id": "playerdeathanimation",
+  "id": "com.titan1um.finishers",
   "version": "${version}",
-  "name": "Player Death Animation",
+  "name": "Finishers",
   "description": "Die with style!",
   "authors": [
-    "playerdeathanimation"
+    "Titan1um"
   ],
   "license": "MIT",
   "environment": "client",
   "entrypoints": {
     "main": [
-      "com.playerdeathanimation.PlayerDeathAnimationMod"
+      "com.titan1um.finishers.FinishersMod"
     ],
     "client": [
-      "com.playerdeathanimation.client.PlayerDeathAnimationClient"
+      "com.titan1um.finishers.client.FinishersClient"
     ],
     "modmenu": [
-      "com.playerdeathanimation.config.PDAModMenu"
+      "com.titan1um.finishers.config.FinishersModMenu"
     ]
   },
   "mixins": [
-    "playerdeathanimation.mixins.json"
+    "finishers.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.15.0",

@@ -1,6 +1,0 @@
-{
-  "screen.playerdeathanimation.title": "Animacja śmierci gracza",
-  "screen.playerdeathanimation.self_effect": "Efekt ekranu śmierci: %s",
-  "screen.playerdeathanimation.observer_effect": "Animacja śmierci: %s",
-  "screen.playerdeathanimation.animation": "Ustawienie animacji: %s"
-}

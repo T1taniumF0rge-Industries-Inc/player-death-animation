@@ -1,5 +1,5 @@
 <!-- Copyright (c) 2026 The T1taniumF0rge Industries® (Inc.) -->
-# Player Death Animation
+# Finishers
 
 Fabric **1.20.1** mod that adds stylized death transitions.
 
@@ -9,14 +9,13 @@ Fabric **1.20.1** mod that adds stylized death transitions.
 - Animation registry architecture so additional death animations can be added easily.
 - Config screen integrated with **Mod Menu**.
 - Client commands:
-  - `/pda`
-  - `/playerdeathanimation`
+  - `/finishersConfig`
 
 ## Config
 Configuration is stored in:
-- `config/pda-config.toml`
+- `config/finishers-config.toml`
 
 Current options:
-- `enable_self_death_effect`
-- `enable_observer_animation`
-- `observer_animation`
+- `enable_self_black_screen_death_effect`
+- `enable_finishers`
+- `finisher_type`
