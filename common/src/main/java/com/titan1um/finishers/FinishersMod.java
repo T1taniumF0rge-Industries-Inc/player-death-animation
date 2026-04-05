@@ -4,7 +4,7 @@ package com.titan1um.finishers;
 import net.fabricmc.api.ModInitializer;
 
 public class FinishersMod implements ModInitializer {
-    public static final String MOD_ID = "com.titan1um.finishers";
+    public static final String MOD_ID = "finishers";
 
     @Override
     public void onInitialize() {
