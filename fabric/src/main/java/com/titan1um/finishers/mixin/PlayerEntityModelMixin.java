@@ -2,6 +2,7 @@
 package com.titan1um.finishers.mixin;
 
 import com.titan1um.finishers.animation.DeathAnimationRegistry;
+import com.titan1um.finishers.client.FinishersClient;
 import com.titan1um.finishers.config.FinishersConfig;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
@@ -27,7 +28,8 @@ public abstract class PlayerEntityModelMixin {
             return;
         }
 
-        int deathTicks = ((LivingEntityAccessor) player).finishers$getDeathTime();
-        DeathAnimationRegistry.apply((PlayerEntityModel<AbstractClientPlayerEntity>) (Object) this, player, deathTicks + animationProgress);
+        ((LivingEntityAccessor) player).finishers$setDeathTime(0);
+        float deathTicks = FinishersClient.getFinisherDeathTicks(player, animationProgress);
+        DeathAnimationRegistry.apply((PlayerEntityModel<AbstractClientPlayerEntity>) (Object) this, player, deathTicks);
     }
 }
