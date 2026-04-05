@@ -9,4 +9,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface LivingEntityAccessor {
     @Accessor("deathTime")
     int finishers$getDeathTime();
+
+    @Accessor("deathTime")
+    void finishers$setDeathTime(int deathTime);
 }

@@ -17,10 +17,17 @@ public class FinishersDeathTransitionScreen extends Screen {
     private long startedAt;
     private boolean switchedToDeathScreen;
 
-    protected FinishersDeathTransitionScreen(Text deathMessage, boolean hardcore) {
+    public FinishersDeathTransitionScreen(Text deathMessage, boolean hardcore) {
         super(Text.empty());
         this.deathMessage = deathMessage;
         this.hardcore = hardcore;
+    }
+
+    public FinishersDeathTransitionScreen(DeathScreen deathScreen) {
+        super(Text.empty());
+        this.deathMessage = null;
+        this.hardcore = false;
+        this.deathScreen = deathScreen;
     }
 
     @Override
@@ -28,17 +35,19 @@ public class FinishersDeathTransitionScreen extends Screen {
         super.init();
         this.startedAt = System.currentTimeMillis();
         this.switchedToDeathScreen = false;
-        this.deathScreen = null;
+
+        if (this.deathScreen == null && this.client != null) {
+            this.deathScreen = new DeathScreen(this.deathMessage, this.hardcore);
+        }
+
+        if (this.deathScreen != null && this.client != null) {
+            this.deathScreen.init(this.client, this.width, this.height);
+        }
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         long elapsed = System.currentTimeMillis() - startedAt;
-
-        if (elapsed >= FLASH_MS && this.deathScreen == null && this.client != null) {
-            this.deathScreen = new DeathScreen(this.deathMessage, this.hardcore);
-            this.deathScreen.init(this.client, this.width, this.height);
-        }
 
         if (this.deathScreen != null) {
             this.deathScreen.render(context, mouseX, mouseY, delta);
@@ -58,7 +67,7 @@ public class FinishersDeathTransitionScreen extends Screen {
 
         if (!this.switchedToDeathScreen && elapsed >= FLASH_MS + FADE_MS && client != null && this.deathScreen != null) {
             this.switchedToDeathScreen = true;
-            client.setScreen(this.deathScreen);
+            FinishersClient.setScreenWithoutDeathIntercept(client, this.deathScreen);
         }
     }
 
