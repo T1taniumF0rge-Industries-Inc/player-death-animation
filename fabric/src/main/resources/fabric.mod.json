@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "com.titan1um.finishers",
+  "id": "finishers",
   "version": "${version}",
   "name": "Finishers",
   "description": "Die with style!",
