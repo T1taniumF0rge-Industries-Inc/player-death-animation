@@ -1,0 +1,8 @@
+{
+  "screen.finishers.title": "Animation de mort du joueur",
+  "screen.finishers.self_effect": "Effet d'écran de mort : %s",
+  "screen.finishers.observer_effect": "Animation de mort : %s",
+  "screen.finishers.animation": "Préréglage d'animation : %s",
+  "screen.finishers.animation_option.knee_fall": "Knee Fall",
+  "screen.finishers.animation_option.random": "Random"
+}

@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.titan1um.finishers.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "LivingEntityAccessor",
+    "PlayerEntityModelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

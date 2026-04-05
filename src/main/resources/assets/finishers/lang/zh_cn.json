@@ -1,0 +1,8 @@
+{
+  "screen.finishers.title": "玩家死亡动画",
+  "screen.finishers.self_effect": "死亡界面效果：%s",
+  "screen.finishers.observer_effect": "死亡动画：%s",
+  "screen.finishers.animation": "动画预设：%s",
+  "screen.finishers.animation_option.knee_fall": "Knee Fall",
+  "screen.finishers.animation_option.random": "Random"
+}
