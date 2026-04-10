@@ -27,23 +27,41 @@ public class FinishersConfigScreen extends Screen {
         int centerX = this.width / 2;
         int y = this.height / 4;
 
-        this.addDrawableChild(ButtonWidget.builder(selfToggleText(), button -> {
-                draft.enableSelfBlackScreenDeathEffect = !draft.enableSelfBlackScreenDeathEffect;
-                button.setMessage(selfToggleText());
-            }).dimensions(centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT)
-            .build());
-
-        y += 24;
-        this.addDrawableChild(ButtonWidget.builder(observerToggleText(), button -> {
-                draft.enableFinishers = !draft.enableFinishers;
-                button.setMessage(observerToggleText());
+        this.addDrawableChild(ButtonWidget.builder(playFinishersText(), button -> {
+                draft.setPlayFinishers(!draft.playFinishers);
+                button.setMessage(playFinishersText());
             }).dimensions(centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT)
             .build());
 
         y += 24;
         this.addDrawableChild(ButtonWidget.builder(animationText(), button -> {
-                cycleAnimation();
+                draft.finisherAnimation = nextIn(DeathAnimationRegistry.availableAnimationIds(), draft.finisherAnimation);
+                if (!FinishersConfig.FINISHER_ANIMATION_OFF.equals(draft.finisherAnimation)) {
+                    draft.lastFinisherAnimation = draft.finisherAnimation;
+                }
                 button.setMessage(animationText());
+            }).dimensions(centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT)
+            .build());
+
+        y += 24;
+        this.addDrawableChild(ButtonWidget.builder(soundText(), button -> {
+                draft.finisherSound = nextIn(FinishersConfig.availableSoundIds(), draft.finisherSound);
+                if (!FinishersConfig.FINISHER_SOUND_OFF.equals(draft.finisherSound)) {
+                    draft.lastFinisherSound = draft.finisherSound;
+                }
+                button.setMessage(soundText());
+            }).dimensions(centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT)
+            .build());
+
+        y += 24;
+        this.addDrawableChild(ButtonWidget.builder(customSoundText(), button -> {
+                draft.customFinisherSound = nextIn(List.of(
+                    "minecraft:entity.player.death",
+                    "minecraft:entity.wither.death",
+                    "minecraft:entity.lightning_bolt.impact",
+                    "finishers:frozen"
+                ), draft.customFinisherSound);
+                button.setMessage(customSoundText());
             }).dimensions(centerX - BUTTON_WIDTH / 2, y, BUTTON_WIDTH, BUTTON_HEIGHT)
             .build());
 
@@ -57,6 +75,14 @@ public class FinishersConfigScreen extends Screen {
         this.addDrawableChild(ButtonWidget.builder(Text.translatable("gui.cancel"), button -> close())
             .dimensions(centerX + 2, bottomY, 100, BUTTON_HEIGHT)
             .build());
+    }
+
+    private String nextIn(List<String> options, String current) {
+        int index = options.indexOf(current);
+        if (index < 0) {
+            return options.get(0);
+        }
+        return options.get((index + 1) % options.size());
     }
 
     @Override
@@ -73,50 +99,44 @@ public class FinishersConfigScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
     }
 
-    private Text selfToggleText() {
-        return Text.translatable("screen.finishers.self_effect", stateText(draft.enableSelfBlackScreenDeathEffect));
-    }
-
-    private Text observerToggleText() {
-        return Text.translatable("screen.finishers.observer_effect", stateText(draft.enableFinishers));
+    private Text playFinishersText() {
+        return Text.translatable("screen.finishers.play_finishers", stateText(draft.playFinishers));
     }
 
     private Text animationText() {
-        return Text.translatable("screen.finishers.animation", finisherDisplayName(draft.finisherType));
+        return Text.translatable("screen.finishers.animation", Text.translatable("screen.finishers.animation_option." + draft.finisherAnimation));
+    }
+
+    private Text soundText() {
+        return Text.translatable("screen.finishers.sound", Text.translatable("screen.finishers.sound_option." + draft.finisherSound));
+    }
+
+    private Text customSoundText() {
+        return Text.translatable("screen.finishers.custom_sound", Text.literal(draft.customFinisherSound));
     }
 
     private Text stateText(boolean value) {
         return value ? Text.translatable("options.on") : Text.translatable("options.off");
     }
 
-    private Text finisherDisplayName(String animationId) {
-        return Text.translatable("screen.finishers.animation_option." + animationId);
-    }
-
-    private void cycleAnimation() {
-        List<String> options = DeathAnimationRegistry.availableAnimationIds();
-        int current = options.indexOf(draft.finisherType);
-        if (current < 0) {
-            draft.finisherType = options.get(0);
-            return;
-        }
-
-        int next = (current + 1) % options.size();
-        draft.finisherType = options.get(next);
-    }
-
     private void apply() {
-        FinishersConfig.get().enableSelfBlackScreenDeathEffect = draft.enableSelfBlackScreenDeathEffect;
-        FinishersConfig.get().enableFinishers = draft.enableFinishers;
-        FinishersConfig.get().finisherType = draft.finisherType;
+        FinishersConfig.get().playFinishers = draft.playFinishers;
+        FinishersConfig.get().finisherAnimation = draft.finisherAnimation;
+        FinishersConfig.get().finisherSound = draft.finisherSound;
+        FinishersConfig.get().customFinisherSound = draft.customFinisherSound;
+        FinishersConfig.get().lastFinisherAnimation = draft.lastFinisherAnimation;
+        FinishersConfig.get().lastFinisherSound = draft.lastFinisherSound;
         FinishersConfig.save();
     }
 
     private FinishersConfig.FinishersConfigData copy(FinishersConfig.FinishersConfigData source) {
         FinishersConfig.FinishersConfigData c = new FinishersConfig.FinishersConfigData();
-        c.enableSelfBlackScreenDeathEffect = source.enableSelfBlackScreenDeathEffect;
-        c.enableFinishers = source.enableFinishers;
-        c.finisherType = source.finisherType;
+        c.playFinishers = source.playFinishers;
+        c.finisherAnimation = source.finisherAnimation;
+        c.finisherSound = source.finisherSound;
+        c.customFinisherSound = source.customFinisherSound;
+        c.lastFinisherAnimation = source.lastFinisherAnimation;
+        c.lastFinisherSound = source.lastFinisherSound;
         return c;
     }
 }

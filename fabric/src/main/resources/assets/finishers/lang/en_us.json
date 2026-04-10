@@ -1,8 +1,18 @@
 {
   "screen.finishers.title": "Finishers",
-  "screen.finishers.self_effect": "Death Screen Effect: %s",
-  "screen.finishers.observer_effect": "Finishers: %s",
+  "screen.finishers.play_finishers": "Play Finishers: %s",
   "screen.finishers.animation": "Finisher: %s",
+  "screen.finishers.sound": "Sound: %s",
+  "screen.finishers.custom_sound": "Custom Sound: %s",
+  "screen.finishers.animation_option.off": "Off",
   "screen.finishers.animation_option.knee_fall": "Knee Fall",
-  "screen.finishers.animation_option.random": "Random"
+  "screen.finishers.animation_option.lightning": "Lightning",
+  "screen.finishers.animation_option.frozen": "Frozen",
+  "screen.finishers.animation_option.random": "Random",
+  "screen.finishers.sound_option.off": "Off",
+  "screen.finishers.sound_option.match": "Match Finisher",
+  "screen.finishers.sound_option.custom": "Custom",
+  "screen.finishers.sound_option.knee_fall": "Knee Fall",
+  "screen.finishers.sound_option.lightning": "Lightning",
+  "screen.finishers.sound_option.frozen": "Frozen"
 }

@@ -21,6 +21,8 @@ public final class DeathAnimationRegistry {
 
     public static void bootstrap() {
         register(new DefaultKneelFallAnimation());
+        register(new LightningFinisherAnimation());
+        register(new FrozenFinisherAnimation());
     }
 
     public static void register(DeathPoseAnimation animation) {
@@ -29,13 +31,19 @@ public final class DeathAnimationRegistry {
 
     public static List<String> availableAnimationIds() {
         List<String> ids = new ArrayList<>();
+        ids.add(FinishersConfig.FINISHER_ANIMATION_OFF);
         ids.add(DefaultKneelFallAnimation.ID);
+        ids.add(LightningFinisherAnimation.ID);
+        ids.add(FrozenFinisherAnimation.ID);
         ids.add(RANDOM_ID);
         return ids;
     }
 
     public static DeathPoseAnimation getActiveAnimation() {
-        String configuredId = FinishersConfig.get().finisherType;
+        String configuredId = FinishersConfig.get().finisherAnimation;
+        if (FinishersConfig.FINISHER_ANIMATION_OFF.equals(configuredId)) {
+            return null;
+        }
         if (RANDOM_ID.equals(configuredId)) {
             return getRandomAnimation();
         }

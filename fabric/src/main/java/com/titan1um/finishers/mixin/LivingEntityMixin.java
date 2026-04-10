@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LivingEntityMixin {
     @Inject(method = "handleStatus", at = @At("HEAD"), cancellable = true)
     private void finishers$disableVanillaDeathSmoke(byte status, CallbackInfo ci) {
-        if (status != EntityStatuses.ADD_DEATH_PARTICLES || !FinishersConfig.get().enableFinishers) {
+        if (status != EntityStatuses.ADD_DEATH_PARTICLES || !FinishersConfig.get().playFinishers) {
             return;
         }
 

@@ -20,11 +20,12 @@ public abstract class PlayerEntityModelMixin {
             return;
         }
 
-        if (player == net.minecraft.client.MinecraftClient.getInstance().player) {
+        if (player == net.minecraft.client.MinecraftClient.getInstance().player
+            && !FinishersClient.shouldRenderOwnFinisher()) {
             return;
         }
 
-        if (player.isAlive() || !FinishersConfig.get().enableFinishers) {
+        if (player.isAlive() || !FinishersConfig.get().playFinishers) {
             return;
         }
 
