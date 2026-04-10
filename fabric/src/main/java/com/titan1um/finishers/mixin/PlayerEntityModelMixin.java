@@ -1,6 +1,7 @@
 // Copyright (c) 2026 The T1taniumF0rge Industries® (Inc.)
 package com.titan1um.finishers.mixin;
 
+import com.titan1um.finishers.access.LivingEntityDeathTimeAccess;
 import com.titan1um.finishers.animation.DeathAnimationRegistry;
 import com.titan1um.finishers.client.FinishersClient;
 import com.titan1um.finishers.config.FinishersConfig;
@@ -29,7 +30,7 @@ public abstract class PlayerEntityModelMixin {
             return;
         }
 
-        ((LivingEntityAccessor) player).finishers$setDeathTime(0);
+        ((LivingEntityDeathTimeAccess) player).finishers$setDeathTime(0);
         float deathTicks = FinishersClient.getFinisherDeathTicks(player, animationProgress);
         DeathAnimationRegistry.apply((PlayerEntityModel<AbstractClientPlayerEntity>) (Object) this, player, deathTicks);
     }
