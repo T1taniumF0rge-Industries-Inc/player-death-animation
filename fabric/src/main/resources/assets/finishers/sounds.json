@@ -1,0 +1,26 @@
+{
+  "knee_fall": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.wither.death"
+      }
+    ]
+  },
+  "lightning": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.lightning_bolt.impact"
+      }
+    ]
+  },
+  "frozen": {
+    "sounds": [
+      {
+        "name": "minecraft:block.glass.break"
+      },
+      {
+        "name": "minecraft:block.amethyst_block.chime"
+      }
+    ]
+  }
+}
