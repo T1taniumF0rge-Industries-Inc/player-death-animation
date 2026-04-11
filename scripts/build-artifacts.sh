@@ -24,9 +24,12 @@ esac
 ./scripts/run-gradle.sh --no-daemon build
 
 mkdir -p "$loader/build/libs"
-jar_source="$(find build/libs -maxdepth 1 -type f -name '*-remapped.jar' | head -n 1)"
+jar_source="$(find build/libs -maxdepth 1 -type f -name '*-remapped.jar' | sort | head -n 1)"
 if [[ -z "$jar_source" ]]; then
-  jar_source="$(find build/libs -maxdepth 1 -type f -name '*.jar' | head -n 1)"
+  jar_source="$(find build/libs -maxdepth 1 -type f -name '*.jar' \
+    ! -name '*-sources.jar' \
+    ! -name '*-javadoc.jar' \
+    | sort | head -n 1)"
 fi
 
 if [[ -z "$jar_source" ]]; then
